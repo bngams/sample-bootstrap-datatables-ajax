@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="fr">
 
 <head>
     <!-- configurations bootstrap -->
@@ -11,7 +11,8 @@
 
     <!-- charger / inclure bootstrap -->
     <link rel="stylesheet" href="node_modules/bootstrap/dist/css/bootstrap.min.css">
-
+    <!-- charger / inclure datatables -->
+    <link rel="stylesheet" href="node_modules/datatables.net-bs4/css/dataTables.bootstrap4.min.css">
     <style>
         /* on peut cumuler styles persos + bootstrap */
         /* ajout de styles personnalisés pour notre navbar */
@@ -74,7 +75,7 @@
         <button type="submit" class="btn btn-dark mb-2">Submit</button>
     </form>
 
-    <table id="#maTable" class="table table-striped">
+    <table id="maTable" class="table table-striped">
         <thead>
             <tr>
                 <th scope="col">#</th>
@@ -109,8 +110,73 @@
     <!-- charger / inclure bootstrap -->
     <!-- l'ordre a une importance (ordre des dépendances) -->
     <script src="node_modules/jquery/dist/jquery.min.js"></script>
-    <script src="node_modules/popper.js/dist/popper.js"></script>
+    <!-- <script src="node_modules/popper.js/dist/popper.min.js"></script> -->
     <script src="node_modules/bootstrap/dist/js/bootstrap.min.js"></script>
+    <!-- charger / inclure datatables -->
+    <script src="node_modules/datatables.net/js/jquery.dataTables.min.js"></script>
+    <script src="node_modules/datatables.net-bs4/js/dataTables.bootstrap4.min.js"></script>
+
+    <!-- script pour tester notre datatable -->
+    <script>
+        $(document).ready(function () {
+            console.log('matable');
+            // charger les données (ajouter des lignes au html)
+            // appeler et récupérer les données sur https://jsonplaceholder.typicode.com/users
+            // requete ajax via jquery
+            var jqxhr = $.ajax("https://jsonplaceholder.typicode.com/users")
+                .done(function (data) {
+                    console.log(data);
+                    // ajouter les lignes a la table
+                    for (const user of data) {
+                        console.log(user);
+                        var rowHTML = `
+                            <tr>
+                                <td>${user.id}</td>
+                                <td>${user.name}</td>
+                                <td>${user.username}</td>
+                                <td>${user.email}</td>
+                            </tr>
+                        `;
+                        $('#maTable tbody').append(rowHTML);
+                    }
+                    // charger datatable
+                    loadDatatable();
+                })
+                .fail(function () {
+                    alert("error");
+                });
+
+        });
+
+        function loadDatatable() {
+            // initialiser la datatable
+            $('#maTable').DataTable({
+                language: {
+                    processing: "Traitement en cours...",
+                    search: "Rechercher&nbsp;:",
+                    lengthMenu: "Afficher _MENU_ &eacute;l&eacute;ments",
+                    info: "Affichage de l'&eacute;lement _START_ &agrave; _END_ sur _TOTAL_ &eacute;l&eacute;ments",
+                    infoEmpty: "Affichage de l'&eacute;lement 0 &agrave; 0 sur 0 &eacute;l&eacute;ments",
+                    infoFiltered: "(filtr&eacute; de _MAX_ &eacute;l&eacute;ments au total)",
+                    infoPostFix: "",
+                    loadingRecords: "Chargement en cours...",
+                    zeroRecords: "Aucun &eacute;l&eacute;ment &agrave; afficher",
+                    emptyTable: "Aucune donnée disponible dans le tableau",
+                    paginate: {
+                        first: "Premier",
+                        previous: "Pr&eacute;c&eacute;dent",
+                        next: "Suivant",
+                        last: "Dernier"
+                    },
+                    aria: {
+                        sortAscending: ": activer pour trier la colonne par ordre croissant",
+                        sortDescending: ": activer pour trier la colonne par ordre décroissant"
+                    }
+                }
+            });
+        }
+    </script>
+
 </body>
 
 </html>
