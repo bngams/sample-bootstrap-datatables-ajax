@@ -2,14 +2,25 @@
 <html lang="en">
 
 <head>
+    <!-- configurations bootstrap -->
+    <!-- Required Bootstrap meta tags -->
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Bootstrap Demo</title>
+
+    <!-- charger / inclure bootstrap -->
+    <link rel="stylesheet" href="node_modules/bootstrap/dist/css/bootstrap.min.css">
 </head>
 
 <body>
-
+    <h1>My title</h1>
+    <!-- de manière générale, les scripts tjrs chargés en fin de page => performance -->
+    <!-- charger / inclure bootstrap -->
+    <!-- l'ordre a une importance (ordre des dépendances) -->
+    <script src="node_modules/jquery/dist/jquery.min.js"></script>
+    <script src="node_modules/popper.js/dist/popper.js"></script>
+    <script src="node_modules/bootstrap/dist/js/bootstrap.min.js"></script>
 </body>
 
 </html>
